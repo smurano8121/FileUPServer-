@@ -1,0 +1,28 @@
+h1{
+  position: relative;
+  padding: 0.25em 0;
+}
+  h1:after {
+  content: "";
+  display: block;
+  height: 4px;
+  background: -moz-linear-gradient(to right, rgb(230, 90, 90), transparent);
+  background: -webkit-linear-gradient(to right, rgb(230, 90, 90), transparent);
+  background: linear-gradient(to right, rgb(230, 90, 90), transparent);
+}
+input {
+	font-size: 15px; 
+}
+body {
+  padding: 10px;
+  font:20px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.wrapper{
+  width: 100%;
+  height: 100%;
+}

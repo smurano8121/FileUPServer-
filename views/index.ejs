@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>擬似窓コミュニケーションツールシステム</title>
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+  </head>
+  <body>
+    <h1>擬似窓コミュニケーションツールシステム</h1>
+    <form 
+    method="POST"
+    enctype="multipart/form-data"
+    action="/">
+      <input type="file" accept="image/*;capture=camera" id="cameraImage" name="thumbnail">
+      <!-- <input type="button" value="グレースケールに変換" id="effect"></input> -->
+      <input type="submit" value="送信"></input>
+    </form>
+    <div class="wrapper">
+    <canvas id="myCanvas"></canvas></div>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/canvasResize.js"></script>
+    <script>
+      // 撮影後に処理を開始
+      document.getElementById("cameraImage").addEventListener("change", function(){
+        // Canvasにカメラで撮影した画像を描画
+        var canvasObj = document.getElementById("myCanvas");
+        var context = canvasObj.getContext("2d");
+        var canvasW = canvasObj.width;
+        var canvasH = canvasObj.height;
+        var reader = new FileReader();
+        reader.onload = function(evt){
+          var imgObj = new Image();
+            imgObj.src = reader.result;
+            imgObj.onload = function(){
+            let cheight=imgObj.height*canvasObj.width/imgObj.width;
+            console.log(imgObj.width+","+imgObj.height+","+cheight);
+            // alert(imgObj.width+","+imgObj.height+","+cheight);
+            context.drawImage(imgObj,0,0, canvasObj.width, cheight);
+            var data = canvasObj.toDataURL();
+            // document.getElementById("result").innerText = data;
+          }
+        }
+        var imageFile = document.getElementById("cameraImage").files[0];
+        reader.readAsDataURL(imageFile);
+      }, false);
+      // クリックしたらエフェクト処理を開始
+      // document.getElementById("effect").addEventListener("click", function(){
+      //   var canvasObj = document.getElementById("myCanvas");
+      //   var context = canvasObj.getContext("2d");
+      //   var imageData = context.getImageData(0,0, canvasObj.width, canvasObj.height);
+      //   var pixelData = imageData.data;  // ピクセルデータを読み出し
+      //   for(var y=0; y<canvasObj.height; y++){
+      //     for(var x=0; x<canvasObj.width; x++){
+      //       var pointer = (y * imageData.width + x ) * 4; // RGBαで4配列
+      //       var red = pixelData[pointer + 0];
+      //       var green = pixelData[pointer + 1];
+      //       var blue = pixelData[pointer + 2];
+      //       var gray = Math.floor(green * 0.6 + red * 0.3 + blue * 0.1);
+      //       pixelData[pointer + 0] = gray;
+      //       pixelData[pointer + 1] = gray;
+      //       pixelData[pointer + 2] = gray;
+      //     }
+      //   }
+      //   context.putImageData(imageData, 0, 0);
+      // }, false);
+
+    </script>
+    <footer>
+        <p><small>&copy; copyright 2018 thirai.</small></p>
+      </footer>
+  </body>
+</html>
